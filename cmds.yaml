@@ -1,0 +1,10 @@
+# YAML
+R1:
+  - ip: 192.168.0.207
+  - login: admin
+  - password: cisco
+  - sleep:  0
+  - show ip nhrp
+  - show dmvpn
+  - show cry isa sa
+  - show cry ipse sa

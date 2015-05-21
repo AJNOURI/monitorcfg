@@ -1,0 +1,274 @@
+
+Building configuration...
+
+Current configuration : 5575 bytes
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname IOU7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging buffered 1000000
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+!
+!
+!
+!
+!
+aaa session-id common
+!
+clock timezone CET 1 0
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+no ip icmp rate-limit unreachable
+ip auth-proxy max-login-attempts 5
+ip admission max-login-attempts 5
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name cciethebeginning.wordpress.com
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-7
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-7
+ revocation-check none
+ rsakeypair TP-self-signed-7
+!
+!
+crypto pki certificate chain TP-self-signed-7
+ certificate self-signed 01
+  30820219 30820182 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  28312630 24060355 0403131D 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 37301E17 0D313530 35313132 31323331 335A170D 32303031 
+  30313030 30303030 5A302831 26302406 03550403 131D494F 532D5365 6C662D53 
+  69676E65 642D4365 72746966 69636174 652D3730 819F300D 06092A86 4886F70D 
+  01010105 0003818D 00308189 02818100 C3D221CC 29F6F621 D0E8095A F4B16736 
+  3F87B0B4 BA4320FC 160FB5B5 534D7F21 C2FBD248 E78AEB5D BD0CE6B2 08525985 
+  CDBF7518 A1B6C637 A1DD68E9 78BBC604 36478485 C63BAC52 62A01459 27E467C4 
+  7AAC93A8 AE2518C4 847C25A1 3F6A9E70 40ED191C E97B2CE8 AC9FC0C6 C0C00A27 
+  3CF4AC08 33360BE6 3878C90B 4002F299 02030100 01A35330 51300F06 03551D13 
+  0101FF04 05300301 01FF301F 0603551D 23041830 1680144E C047E643 46A95BA2 
+  4C251EAC 7109042C 43A75E30 1D060355 1D0E0416 04144EC0 47E64346 A95BA24C 
+  251EAC71 09042C43 A75E300D 06092A86 4886F70D 01010505 00038181 0018283A 
+  61BA3C5E 088AF22E 206F7233 52B3A8C7 81A31DD6 09804E0D D907B78C 1D2E7842 
+  904F0A02 169A4F84 6017E1D0 169B95A1 F0B7038B 77CD1DBE F5EC2757 ABE030E1 
+  DAC4F157 126BF69F AC151466 009A4E69 19651526 58FAF2B2 F15D0A85 2AFD82A0 
+  8D69E986 A89D34D9 3FD7704E A2D8EB02 1DE623B2 CEB22BE2 C91D0AAA FD
+  	quit
+username admin privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+ip tcp synwait-time 5
+ip ssh rsa keypair-name IOU7.cciethebeginning.wordpress.com
+ip ssh version 2
+! 
+!
+!
+!
+!
+crypto isakmp policy 10
+ encr aes 256
+ hash sha512
+ authentication pre-share
+ group 24
+crypto isakmp key cisco321 address 0.0.0.0        
+!
+!
+crypto ipsec transform-set MY_TRANSFORM esp-aes esp-sha512-hmac 
+!
+crypto ipsec profile MY_PROFILE
+ set transform-set MY_TRANSFORM 
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 70.0.0.7 255.255.255.0
+!
+interface Tunnel0
+ ip address 172.16.70.7 255.240.0.0
+ no ip redirects
+ ip mtu 1400
+ no ip next-hop-self eigrp 666
+ no ip split-horizon eigrp 666
+ ip nhrp authentication cisco321
+ ip nhrp map 172.16.40.4 192.168.14.4
+ ip nhrp map multicast 192.168.14.4
+ ip nhrp network-id 1
+ ip nhrp nhs 172.16.40.4
+ ip nhrp shortcut
+ ip nhrp redirect
+ ip tcp adjust-mss 1360
+ tunnel source Ethernet0/0
+ tunnel mode gre multipoint
+ tunnel key 321
+ tunnel protection ipsec profile MY_PROFILE
+!
+interface Ethernet0/0
+ ip address 192.168.17.7 255.255.255.0
+!
+interface Ethernet0/1
+ no ip address
+ shutdown
+!
+interface Ethernet0/2
+ no ip address
+ shutdown
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ ip address 192.168.0.207 255.255.255.0
+!
+interface Serial2/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial2/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/0
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/1
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/2
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+interface Serial3/3
+ no ip address
+ shutdown
+ serial restart-delay 0
+!
+!
+router eigrp 666
+ network 70.0.0.0 0.0.0.255
+ network 172.16.70.0 0.0.0.255
+!
+ip forward-protocol nd
+!
+!
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 0.0.0.0 0.0.0.0 192.168.17.100
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+alias exec p6 ping
+alias exec se sh running-config | section
+alias exec sr sh running-config
+alias exec cc copy run start
+alias exec ii sh ip int brief
+alias exec sia sh ip alias
+alias exec iiu sh ip int brief | ex unassigned
+alias exec intcf sh run interface
+alias exec acl sh ip access-list
+alias exec acl6 sh ipv6 access-list
+alias exec croute clear ip route
+alias exec ii6 sh ipv6 int brief
+alias exec route6 sh ipv6 route
+alias exec route4 sh ip route | beg Gate
+alias exec trace6 trace ipv6
+alias exec bgp4 sh ip bgp
+alias exec bgpcf sh run | b router bgp
+alias exec bgpn sh ip bgp summ
+alias exec ospfcf sh run | b router ospf
+alias exec ospfn sh ip ospf nei
+alias exec cospf clear ip ospf pro
+alias exec eigrpcf sh run | b router eigrp
+alias exec eigrpn sh ip eigrp nei
+alias exec ripcf sh run | b router rip
+alias exec cpu show proc cpu | exclu 0.00%__0.00%__0.00%
+alias exec maincpu | include ^CPU|IP Input
+alias exec mem show proc memory
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ exec-timeout 0 0
+ privilege level 15
+ transport input telnet ssh
+!
+!
+end
