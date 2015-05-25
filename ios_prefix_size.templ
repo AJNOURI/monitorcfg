@@ -1,0 +1,10 @@
+Value RouteSource (\w+\s\d*)
+Value Networks (\d+)
+Value Subnets (\d+)
+Value Replicates (\d+)
+Value Overhead (\d+)
+Value Memory (\d+)
+
+
+Start
+  ^${RouteSource}\s+${Networks}\s+${Subnets}\s+${Replicates}\s+${Overhead}\s+${Memory} -> Record

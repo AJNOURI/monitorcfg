@@ -1,0 +1,12 @@
+Value Code (\S+)
+Value Prefix (\S+)
+Value Ad (\d+)
+Value Metric (\d+)
+Value Nexthop (\S+)
+Value Time (\S+)
+Value Outputint (\S+)
+
+
+Start
+  ^${Code}\s+${Prefix}\s+\[${Ad}\/${Metric}\]\s+via\s+${Nexthop},\s+${Time},\s+${Outputint} -> Record
+  # TODO: take into account multipaths

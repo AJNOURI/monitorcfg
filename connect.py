@@ -133,10 +133,10 @@ def readYaml(logger, cmdfile):
     return data
     # handle file exceptions
 
-def remoteDev(logger, rdata, flg=False, timeout=300):
+def remote_dev(logger, rdata, flg=False, timeout=300):
     """
     Send parameter list read from yaml file to be executed in the device
-    ex: remoteDev("init.yaml", flg=False)
+    ex: remote_dev("init.yaml", flg=False)
     :param rdata: list of credentials and commands to execute
     :param flg: log command result to a file if True
     :param timeout: 5min, telnet (pexpect timeout for executing the command)
@@ -169,12 +169,14 @@ def remoteDev(logger, rdata, flg=False, timeout=300):
             #conn.telnet()
             #conn.TSendCmds()
             filelist = conn.ssh()
-            logger.info('Sleeping : ' + str(sleep) + ' seconds... (remoteDev)')
+            logger.info('Sleeping : ' + str(sleep) + ' seconds... (remote_dev)')
             time.sleep(sleep)
             return filelist
     else:
         # rise exception
         logger.debug('File ' + rdata + ' empty')
+        emptylist = []
+        return emptylist
 
 
 
