@@ -19,7 +19,6 @@ print ios_int_ip(result, 'Ethernet0/0', '192.168.17.7')
 -----------------------
 
 # IOS: get RIB size (prefix number)
-# Get device data dictionary from a script Dictionary object
 ```python
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
@@ -36,7 +35,6 @@ print ios_rib_size(result)
 -----------------------
 
 # IOS: is the prefix learned from a specific routing protocol?
-Get device data dictionary from a script Dictionary object
 ```
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
@@ -54,7 +52,6 @@ print ios_isprefix_prot('D', '70.0.0.0', result)
 -----------------------
 
 # IOS: is the prefix in the RIB?
- Get device data dictionary from a script Dictionary object
 ```python
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
@@ -72,7 +69,6 @@ print ios_isprefix('70.0.0.0', result)
 -----------------------
 
 # IOS: does a prefix has a specific nh?
-Get device data dictionary from a script Dictionary object
 ```
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
