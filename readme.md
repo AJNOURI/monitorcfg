@@ -54,20 +54,20 @@ print ios_isprefix_prot('D', '70.0.0.0', result)
 
 ###5 IOS: is the prefix in the RIB?
 # Get device data dictionary from a script Dictionary object
-```
-dataDict = {'R1': [\
-    {'ip': '192.168.0.204'}, \
-    {'login': 'admin'}, \
-    {'password': 'cisco'}, \
-    {'sleep': 0}, \
-    'sh ip route | i 70.0.0.0 '
-    ]}
 
-output_file = remote_dev(logger, dataDict, flg=filelog, timeout=300) # command result file name
-result = txt_fsm_parser(output_file[0], 'ios_isprefix_prot.templ')
-print result
-print ios_isprefix('70.0.0.0', result)
-```
+>dataDict = {'R1': [\
+>    {'ip': '192.168.0.204'}, \
+>    {'login': 'admin'}, \
+>    {'password': 'cisco'}, \
+>    {'sleep': 0}, \
+>    'sh ip route | i 70.0.0.0 '
+>    ]}
+>
+>output_file = remote_dev(logger, dataDict, flg=filelog, timeout=300) # command result file name
+>result = txt_fsm_parser(output_file[0], 'ios_isprefix_prot.templ')
+>print result
+>print ios_isprefix('70.0.0.0', result)
+
 ***
 
 ###6 IOS: does a prefix has a specific nh?
