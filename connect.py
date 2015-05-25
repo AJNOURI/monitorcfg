@@ -195,6 +195,7 @@ def mkfile(command, testid, testrun, iteration, hostname):
     under_command = command.replace(':', '_')
     under_command = under_command.replace('.', '_')
     under_command = under_command.replace('/', '_')
+    under_command = under_command.replace('|', '_')
     filename = 'C' + str(testid) + '_TR' + str(testrun) + '_IT' + str(iteration) + '_'+ hostname +'_'+ under_command
     filename = filename.replace(' ', '_')
     return filename
