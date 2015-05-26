@@ -35,7 +35,7 @@ print ios_rib_size(result)
 -----------------------
 
 # IOS: is the prefix learned from a specific routing protocol?
-```
+```python
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
     {'login': 'admin'}, \
@@ -69,7 +69,7 @@ print ios_isprefix('70.0.0.0', result)
 -----------------------
 
 # IOS: does a prefix has a specific nh?
-```
+```python
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
     {'login': 'admin'}, \
