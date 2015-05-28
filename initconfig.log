@@ -1,6 +1,0 @@
-2015-05-25 06:58:04,552 - __main__ - INFO - ssh - Successful SSH authentication to host 192.168.0.204
-2015-05-25 06:58:04,552 - __main__ - DEBUG - ssh - SSH sendCmds()- hostname : R1
-2015-05-25 06:58:04,552 - __main__ - DEBUG - ssh - SSH sendCmds()- file logging : True
-2015-05-25 06:58:04,552 - __main__ - DEBUG - ssh - SSsendCmds()- cmdi: sh ip route | i 70.0.0.0 
-2015-05-25 06:58:04,565 - __main__ - DEBUG - ssh - sendCmds()- file logging enabled 
-2015-05-25 06:58:04,670 - __main__ - INFO - remote_dev - Sleeping : 0 seconds... (remote_dev)

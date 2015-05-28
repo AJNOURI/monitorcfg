@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import logging
 import textfsm
+import connect
 from connect import *
+import logging
 
 
 
@@ -22,12 +23,14 @@ def txt_fsm_parser(inputf, templatef):
 
 ####################################################################################################
 
-def prefix_to_nh(fsmresult, prefix, ip):
+def prefix_to_nh(arg_dict):
     """
     Match a specific next-hop for a given route from the routing table
-    :param fsmresult:
-    :return:
     """
+    prefix = arg_dict['prefix']
+    ip = arg_dict['ip']
+    fsmresult = arg_dict['fsmresult']
+
     #print fsmresult
     isResult = False
     for row in fsmresult:
@@ -40,13 +43,13 @@ def prefix_to_nh(fsmresult, prefix, ip):
                     isResult = True
     return isResult
 
-def ios_int_up(fsmresult, interface):
+def ios_int_up(arg_dict):
     """
     IOS: show ip int brief: Is an interface UP?
-    :param fsmresult:
-    :param interface:
-    :return:
     """
+    interface = arg_dict['interface']
+    fsmresult = arg_dict['fsmresult']
+
     isResult = False
     for row in fsmresult:
         #print row
@@ -55,14 +58,14 @@ def ios_int_up(fsmresult, interface):
     return isResult
 
 
-def ios_int_ip(fsmresult, interface, ip):
+def ios_int_ip(arg_dict):
     """
     IOS: show ip int brief: Is the interface configured with this IP
-    :param fsmresult:
-    :param interface:
-    :param ip:
-    :return:
     """
+    interface = arg_dict['interface']
+    ip = arg_dict['ip']
+    fsmresult = arg_dict['fsmresult']
+
     isResult = False
     for row in fsmresult:
         #print row
@@ -71,10 +74,11 @@ def ios_int_ip(fsmresult, interface, ip):
     return isResult
 
 
-def ios_rib_size(fsmresult):
+def ios_rib_size(arg_dict):
     """
     IOS: get the number of prefixes in the RIB
     """
+    fsmresult = arg_dict['fsmresult']
     result = 0
     for row in fsmresult:
         print row
@@ -83,13 +87,12 @@ def ios_rib_size(fsmresult):
     return result
 
 
-def ios_isprefix_prot(code, prefix, fsmresult):
-    """
-    IOS: check whether a prefix is available through a given routing protocol (code)
-    :param code: routing protocol RIB code
-    :param fsmresult:
-    :return:
-    """
+def ios_isprefix_prot(arg_dict):
+
+    prefix = arg_dict['prefix']
+    code = arg_dict['code']
+    fsmresult = arg_dict['fsmresult']
+
     result = False
     for row in fsmresult:
         #print row
@@ -98,13 +101,11 @@ def ios_isprefix_prot(code, prefix, fsmresult):
             #print row
     return result
 
-def ios_isprefix(prefix, fsmresult):
-    """
-    IOS: check whether there is a roue to a prefix
-    :param prefix: a destination prefix
-    :param fsmresult:
-    :return:
-    """
+def ios_isprefix(arg_dict):
+
+    prefix = arg_dict['prefix']
+    fsmresult = arg_dict['fsmresult']
+
     result = False
     for row in fsmresult:
         #print row
@@ -114,13 +115,12 @@ def ios_isprefix(prefix, fsmresult):
     return result
 
 
-def ios_isprefix_nh(prefix, nh, fsmresult):
-    """
-    IOS: check whether there is a roue to a prefix
-    :param prefix: a destination prefix
-    :param fsmresult:
-    :return:
-    """
+def ios_isprefix_nh(arg_dict):
+
+    prefix = arg_dict['prefix']
+    nh = arg_dict['nh']
+    fsmresult = arg_dict['fsmresult']
+
     result = False
     for row in fsmresult:
         #print row
@@ -145,24 +145,7 @@ def ios_isprefix_nh(prefix, nh, fsmresult):
 
 
 
-
-logger = logging.getLogger(__name__)
-### Manually set logging level
-#logging.basicConfig(level=logging.INFO)
-logging.basicConfig(level=logging.DEBUG)
-
-handler = logging.FileHandler('initconfig.log', mode='w')
-# Create logging format and bind to root logging object
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(funcName)s - %(message)s')
-# Create file handler
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-filelog = True
-
-
-
-
-
+"""
 # Get device data dictionary from a script Dictionary object
 dataDict = {'R1': [\
     {'ip': '192.168.0.204'}, \
@@ -175,8 +158,12 @@ dataDict = {'R1': [\
 output_file = remote_dev(logger, dataDict, flg=filelog, timeout=300) # command result file name
 result = txt_fsm_parser(output_file[0], 'ios_isprefix_prot.templ')
 print result
-print ios_isprefix_nh('70.0.0.0','172.16.70.7', result)
-
+arg_dict = {}
+arg_dict['prefix'] = '70.0.0.0'
+arg_dict['nh'] = '172.16.70.7'
+arg_dict['result'] = result
+print ios_isprefix_nh(arg_dict)
+"""
 
 
 """
@@ -234,7 +221,7 @@ dataDict = {'R1': [\
     ]}
 
 output_file = remote_dev(logger, dataDict, flg=filelog, timeout=300) # command result file name
-result = txt_fsm_parser(output_file[0], 'ios_isprefix_prot.templ')
+result = txt_fsm_parser(output_file[0], 'ios_isprefix_prot.ios_isprefix_prot')
 print result
 print ios_isprefix('70.0.0.0', result)
 

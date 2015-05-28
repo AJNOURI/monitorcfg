@@ -1,0 +1,52 @@
+# YAML
+
+-
+  description: 'Check interface status'
+  function: 'Interfaces_UP'
+  device: {
+        'hostname': 'R1',
+        'ip': '192.168.0.204',
+        'login': 'admin',
+        'password': 'cisco',
+        'sleep': 0
+        }
+  command: 'sh ip route | i 70.0.0.0 '
+  template: 'ios_int_status.templ'
+-
+  description: 'IP configuration'
+  function: 'Interfaces_IP'
+  device: {
+        'hostname': 'R1',
+        'ip': '192.168.0.204',
+        'login': 'admin',
+        'password': 'cisco',
+        'sleep': 0
+        }
+  command: 'sh ip int brief '
+  template: 'ios_int_ip.templ'
+-
+  description: 'Check prefix next-hop'
+  function: 'ios_isprefix_nh'
+  args: ['70.0.0.0','172.16.70.7']
+  device: {
+        'hostname': 'R1',
+        'ip': '192.168.0.204',
+        'login': 'admin',
+        'password': 'cisco',
+        'sleep': 0
+        }
+  command: 'sh ip route | i 70.0.0.0 '
+  template: 'ios_isprefix_prot.templ'
+-
+  description: 'Check prefix in the RIB'
+  function: 'ios_isprefix'
+  args: ['70.0.0.0',]
+  device: {
+        'hostname': 'R1',
+        'ip': '192.168.0.204',
+        'login': 'admin',
+        'password': 'cisco',
+        'sleep': 0
+        }
+  command: 'sh ip route | i 70.0.0.0 '
+  template: 'ios_isprefix_prot.templ'
