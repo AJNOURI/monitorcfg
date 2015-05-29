@@ -1,3 +1,4 @@
+
 Interface                  IP-Address      OK? Method Status                Protocol
 Ethernet0/0                192.168.14.4    YES NVRAM  up                    up      
 Ethernet0/1                unassigned      YES NVRAM  administratively down down    

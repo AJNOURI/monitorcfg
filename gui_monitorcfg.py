@@ -79,7 +79,7 @@ class TrackApp(Frame):
 
         self.tree.grid(row=1, column=0, sticky=N + W + E + S)
 
-        self.f = "outline2.yaml"
+        self.f = "outline.yaml"
 
         self.read_param(monitorcfg, self.read_yaml(self.f))
 
@@ -168,15 +168,17 @@ class TrackApp(Frame):
 
                         if  func(arg_dict):
                             backgrnd = 'green'
+                            state = 'OK'
                         else:
                             backgrnd = 'red'
+                            state = 'NOK'
 
-                    print backgrnd
-                    id1 = self.tree.insert('', 0, text=item.get('description').strip('\r\n'), \
-                                      values=("NOK","","","","",""),\
+                        print backgrnd
+                        id1 = self.tree.insert('', 0, text=item.get('description').strip('\r\n'), \
+                                      values=(state,"","","","",""),\
                                       tags=('state','','','','',''))
 
-                    self.tree.tag_configure('state', background=backgrnd)
+                        self.tree.tag_configure('state', background=backgrnd)
 
             else:
                 print 'Empty yaml file'

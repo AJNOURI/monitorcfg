@@ -1,22 +1,24 @@
 # YAML
 
 -
-  description: 'Check interface status'
-  function: 'Interfaces_UP'
+  description: 'R4: e0/0 is UP'
+  function: 'ios_int_up'
+  args: {'interface':'Ethernet0/0'}
   device: {
-        'hostname': 'R1',
+        'hostname': 'R4',
         'ip': '192.168.0.204',
         'login': 'admin',
         'password': 'cisco',
         'sleep': 0
         }
-  command: 'sh ip route | i 70.0.0.0 '
-  template: 'ios_int_status.templ'
+  command: 'sh ip int brief '
+  template: 'ios_int_up.templ'
 -
-  description: 'IP configuration'
-  function: 'Interfaces_IP'
+  description: 'R4: e0/0 has IP 192.168.14.4'
+  function: 'ios_int_ip'
+  args: {'interface':'Ethernet0/0','ip':'192.168.14.4'}
   device: {
-        'hostname': 'R1',
+        'hostname': 'R4',
         'ip': '192.168.0.204',
         'login': 'admin',
         'password': 'cisco',
@@ -25,11 +27,24 @@
   command: 'sh ip int brief '
   template: 'ios_int_ip.templ'
 -
-  description: 'Check prefix next-hop'
-  function: 'ios_isprefix_nh'
-  args: ['70.0.0.0','172.16.70.7']
+  description: 'R4: Tunnel0 has IP 172.16.40.4'
+  function: 'ios_int_ip'
+  args: {'interface':'Tunnel0','ip':'172.16.40.4'}
   device: {
-        'hostname': 'R1',
+        'hostname': 'R4',
+        'ip': '192.168.0.204',
+        'login': 'admin',
+        'password': 'cisco',
+        'sleep': 0
+        }
+  command: 'sh ip int brief '
+  template: 'ios_int_ip.templ'
+-
+  description: 'R4: prefix 70.0.0.0 has next-hop 172.16.70.7'
+  function: 'ios_isprefix_nh'
+  args: {'prefix':'70.0.0.0','nh':'172.16.70.7'}
+  device: {
+        'hostname': 'R4',
         'ip': '192.168.0.204',
         'login': 'admin',
         'password': 'cisco',
@@ -38,11 +53,24 @@
   command: 'sh ip route | i 70.0.0.0 '
   template: 'ios_isprefix_prot.templ'
 -
-  description: 'Check prefix in the RIB'
-  function: 'ios_isprefix'
-  args: ['70.0.0.0',]
+  description: 'R4: prefix 70.0.0.0 learned by EIGRP'
+  function: 'ios_isprefix_prot'
+  args: {'prefix':'70.0.0.0','code':'D'}
   device: {
-        'hostname': 'R1',
+        'hostname': 'R4',
+        'ip': '192.168.0.204',
+        'login': 'admin',
+        'password': 'cisco',
+        'sleep': 0
+        }
+  command: 'sh ip route | i 70.0.0.0 '
+  template: 'ios_isprefix_prot.templ'
+-
+  description: 'R4: prefix 70.0.0.0 learnt'
+  function: 'ios_isprefix'
+  args: {'prefix':'70.0.0.0'}
+  device: {
+        'hostname': 'R4',
         'ip': '192.168.0.204',
         'login': 'admin',
         'password': 'cisco',
